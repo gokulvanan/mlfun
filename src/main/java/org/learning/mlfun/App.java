@@ -1,7 +1,7 @@
 package org.learning.mlfun;
 
 /**
- * Hello world!
+ *
  *
  */
 public class App 
