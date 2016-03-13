@@ -41,8 +41,8 @@ public class BagOfWordsBucketModel implements IMessageBucket{
 	}
 
 	@Override
-	public int uniqueTokenSize() {
-		return words.size();
+	public Set<String> getUniqueTokens() {
+		return words;
 	}
 	
 	private List<String> tokenizedWords(String message){
@@ -54,6 +54,6 @@ public class BagOfWordsBucketModel implements IMessageBucket{
 			int laplaceSmoothingConstant) {
 		double wordPresent = (word.contains(word)) ? 1d : 0d;
 		return (wordPresent + laplaceSmoothingConstant)
-				/ (uniqueTokenSize() + (laplaceSmoothingConstant * totalUniqueTokens));
+				/(words.size() + (laplaceSmoothingConstant * totalUniqueTokens));
 	}
 }

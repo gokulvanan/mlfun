@@ -1,4 +1,4 @@
-package org.learning.mlfun.bayes;
+package org.learning.mlfun;
 
 public interface ISpamPredictor {
 	

@@ -1,5 +1,9 @@
 package org.learning.mlfun.bayes;
 
+import org.learning.mlfun.ISpamPredictor;
+
+import com.google.common.collect.Sets;
+
 
 public class BayesSpamPredictor implements ISpamPredictor {
 
@@ -18,7 +22,7 @@ public class BayesSpamPredictor implements ISpamPredictor {
 	@Override
 	public boolean isSpam(String message) {
 //		String[] words = tokenizedWords(message);
-		int totalUniqueTokens = spamBucket.uniqueTokenSize() + notSpamBucket.uniqueTokenSize();
+		int totalUniqueTokens = Sets.union(spamBucket.getUniqueTokens(), notSpamBucket.getUniqueTokens()).size();
 		double porbOfSpamGivenMessage = spamBucket.getProbOfMsgInBucket(message, totalUniqueTokens, laplaceSmoothingConstant);
 		double probOfNotSpamGiventMessage = notSpamBucket.getProbOfMsgInBucket(message, totalUniqueTokens, laplaceSmoothingConstant);
 		double probOfSpam = computeProbOfSpamFromLearntMessages(spamBucket,notSpamBucket);

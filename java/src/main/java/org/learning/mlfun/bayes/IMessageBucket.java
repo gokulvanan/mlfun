@@ -1,5 +1,7 @@
 package org.learning.mlfun.bayes;
 
+import java.util.Set;
+
 public interface IMessageBucket {
 
 	/**
@@ -24,10 +26,7 @@ public interface IMessageBucket {
 	double getProbOfMsgInBucket(String message, int totalUniqueTokens,
 			int laplaceSmoothingConstant);
 
-	/**
-	 * Get unique number of message tokens indexed
-	 * @return
-	 */
-	int uniqueTokenSize();
+
+    Set<String> getUniqueTokens();
 
 }

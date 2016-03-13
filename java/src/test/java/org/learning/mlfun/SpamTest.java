@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.learning.mlfun.bayes.BayesSpamPredictor;
-import org.learning.mlfun.bayes.ISpamPredictor;
 
 public class SpamTest {
 	private ISpamPredictor predictor;
