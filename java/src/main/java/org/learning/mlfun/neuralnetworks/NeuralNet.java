@@ -4,11 +4,70 @@ public class NeuralNet {
 
     public static void main(String[] args){
         
-        trainingAPerceptronUsingPerceptronRule();
+//        trainingAPerceptronUsingPerceptronRule();
+        trainingAPerceptronUsingGradientDescent();
        
     }
     
     
+    static void trainingAPerceptronUsingGradientDescent(){
+        //TODO fix this and given proper training data.. this data is not helping
+        int [] [] x = {
+                {2,3}, {2,-5}, {4,4}, {-3,-3}, {-9,5} ,{6,6}
+        }; 
+        double [] y = {
+                4, 7, 2, -3, -8, 5
+        };
+        
+        SimplePerceptron perceptron = new SimplePerceptron();
+        //Some ramndom weights
+        perceptron.w = new double[2];
+        perceptron.w[0]= 3;
+        perceptron.w[1]= 3;
+        
+        double learningRate = 0.002, errorThreshold =0.3; //TODO fix this application and check
+        boolean converged = false;
+        do{
+            int convergeCount = 0;
+            for(int j=0; j<x.length; j++){ //check if existing weights converge for the sample inputs
+                perceptron.x = x[j];
+                double actualY = perceptron.getY();
+                System.out.println("actual Y "+actualY+" expected Y "+y[j]);
+                if((Math.abs(actualY - y[j])/100d) < errorThreshold){ // if prediction is within accepted threshold
+                    convergeCount++;
+                }
+            }
+           converged = (convergeCount == x.length);
+           if(!converged){ //compute weights by gradientDescent
+               for(int i=0 ;i<perceptron.w.length; i++){
+                   perceptron.w[i] = perceptron.w[i] - 
+                           (learningRate * gradientOfErrorFunction(perceptron,x,y, i));
+               }
+           }
+
+        }while(!converged); // reitrate till convergence
+        System.out.println(perceptron.w[0]+","+perceptron.w[1]);
+    }
+    
+    private static double gradientOfErrorFunction(SimplePerceptron perceptron,
+            int[][] x, double[] y, int wtIndex) {
+        // (w.xd - yd)xid
+        double buff = 0;
+        double xid = 0;
+        
+        for(int i=0; i<y.length; i++){
+            perceptron.x = x[i];
+            double wxd = perceptron.dotProductOfWX();
+            double yd = y[i];
+            buff += wxd - yd;
+            xid += x[i][wtIndex];
+        }
+        
+        double gradient = buff * xid;
+        return gradient;
+    }
+
+
     //Here attempting to train a perceptron using sample training data
     // this data is such that any data with x dimesion +ve is true and rest are false.
     static void trainingAPerceptronUsingPerceptronRule(){
@@ -20,7 +79,7 @@ public class NeuralNet {
                 true, true, true, false, false, true
         };
         
-        ThresholdedPerceptron perceptron = new ThresholdedPerceptron();
+        SimpleThresholdedPerceptron perceptron = new SimpleThresholdedPerceptron();
         perceptron.threshold =0;
         //Some ramndom weights
         perceptron.w = new double[2];
@@ -54,7 +113,7 @@ public class NeuralNet {
     
     //basic example showing how ot update weights using perceptron rule
     static void perceptronRuleExample(){
-        ThresholdedPerceptron perceptron = new ThresholdedPerceptron();
+        SimpleThresholdedPerceptron perceptron = new SimpleThresholdedPerceptron();
         perceptron.threshold =0;
         perceptron.w = new double[2];
         perceptron.w[0]= 5;
