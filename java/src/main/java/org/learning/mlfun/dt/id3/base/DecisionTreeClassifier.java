@@ -65,7 +65,7 @@ public class DecisionTreeClassifier<Data,Classification> {
 			node.childreen = new Node[bestTupple.classfiedDataBuckets.length];
 			for(int i=0; i<bestTupple.classfiedDataBuckets.length; i++){
 				Node<Data,Classification> child = new Node<>();
-				recBuilder(child, dataClassified, newAttrSet, classifications);
+				recBuilder(child, bestTupple.classfiedDataBuckets[i], newAttrSet, classifications);
 				node.childreen[i] = child;
 			}
 		}
