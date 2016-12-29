@@ -214,12 +214,12 @@ def main():
     X_train, y_train, X_test, y_test = split_data(city_data)
 
     # Learning Curve Graphs
-    #max_depths = [1,2,3,4,5,6,7,8,9,10]
-    #for max_depth in max_depths:
-    #    learning_curve(max_depth, X_train, y_train, X_test, y_test)
+    max_depths = [1,2,3,4,5,6,7,8,9,10]
+    for max_depth in max_depths:
+        learning_curve(max_depth, X_train, y_train, X_test, y_test)
 
     # Model Complexity Graph
-    #model_complexity(X_train, y_train, X_test, y_test)
+    model_complexity(X_train, y_train, X_test, y_test)
 
     # Tune and predict Model
     fit_predict_model(city_data)
